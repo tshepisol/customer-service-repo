@@ -27,7 +27,7 @@ public class RestClientTestIT {
 
         Customer customer = getCustomer();
         RestTemplate restTemplate = new RestTemplate();
-        URI uri = restTemplate.postForLocation(BASE_URL, customer, Customer.class);
+        URI uri = restTemplate.postForLocation(BASE_URL, customer);
 
         Assert.assertNotNull(uri.toASCIIString());
 
@@ -37,7 +37,7 @@ public class RestClientTestIT {
 
 
     /**
-     * Validates Gender + Citizenship position of the ID number
+     * Validates Gender + Citizenship position of an ID number
      * Gender + Citizen are not part of the requirement. validation will be optional
      */
     @Test
@@ -52,6 +52,7 @@ public class RestClientTestIT {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Customer> customerResponseEntity = restTemplate.postForEntity(BASE_URL, customer, Customer.class);
 
+        Assert.assertEquals(customerResponseEntity.getStatusCode().value(), 201);
         Assert.assertNotNull(customerResponseEntity);
 
         System.out.println("URL to retrieve Customer:"+customerResponseEntity);
@@ -68,7 +69,10 @@ public class RestClientTestIT {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Customer> customerResponseEntity = restTemplate.getForEntity(BASE_URL+"/1", Customer.class);
 
+
         Assert.assertNotNull(customerResponseEntity);
+        Assert.assertEquals(customerResponseEntity.getStatusCode().value(), 200);
+        Assert.assertNotNull(customerResponseEntity.getBody());
 
         System.out.println("URL to retrieve Customer:"+customerResponseEntity);
 

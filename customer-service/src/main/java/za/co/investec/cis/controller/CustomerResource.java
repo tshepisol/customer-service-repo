@@ -78,7 +78,7 @@ public class CustomerResource {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(uriComponentsBuilder.path("/customer/{id}").buildAndExpand(customer.getId()).toUri());
 
-        return new ResponseEntity<String>(httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<Void>(httpHeaders, HttpStatus.CREATED);
     }
 
     @PutMapping
@@ -92,12 +92,12 @@ public class CustomerResource {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long customerId){
+    public ResponseEntity<Void> delete(@PathVariable("id") Long customerId){
 
         log.info("delete customer id: {}", customerId);
 
         customerService.delete(customerId);
 
-        return  new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
